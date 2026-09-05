@@ -7,19 +7,18 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar código fuente
-        uses: actions/checkout@v4
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
 
-      - name: Configurar entorno de Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
 
-      - name: Verificar ejecución del pipeline CI
-        run: |
-          echo "Pipeline de CI ejecutado correctamente para Farmacia El Descuento"
-          python --version
+    - name: Ejecutar Pruebas Automatizadas
+      run: |
+        python -m unittest discover -s src
